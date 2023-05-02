@@ -29,6 +29,9 @@ function App() {
 
     function removeNote(id) {
         setNotes(notes.filter(note => note.id !== id));
+        fetch('https://jsonplaceholder.typicode.com/posts/'+id, {
+            method: 'DELETE',
+        });
     }
 
     function addNote(title) {
@@ -37,6 +40,21 @@ function App() {
             id: Date.now(),
             completed: false
         }]))
+        
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        body: JSON.stringify({
+            title: title,
+            body: title,
+            userId: 1,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+        })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+
     }
 
     return (
